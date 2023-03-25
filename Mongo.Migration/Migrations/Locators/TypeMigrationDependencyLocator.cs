@@ -32,18 +32,13 @@ namespace Mongo.Migration.Migrations.Locators
         {
             var constructor = type.GetConstructors()[0];
 
-            if (constructor != null)
-            {
-                var args = constructor
-                    .GetParameters()
-                    .Select(o => o.ParameterType)
-                    .Select(o => _containerProvider.GetInstance(o))
-                    .ToArray();
+            var args = constructor
+                .GetParameters()
+                .Select(o => o.ParameterType)
+                .Select(o => _containerProvider.GetInstance(o))
+                .ToArray();
 
-                return Activator.CreateInstance(type, args) as TMigrationType;
-            }
-
-            return Activator.CreateInstance(type) as TMigrationType;
+            return Activator.CreateInstance(type, args) as TMigrationType;
         }
 
         private class TypeComparer : IEqualityComparer<Type>
