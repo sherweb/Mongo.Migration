@@ -1,10 +1,7 @@
 ﻿using Mongo.Migration.Documents.Serializers;
-
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
-
 using NLog;
-
 using NUnit.Framework;
 
 namespace Mongo.Migration.Test.Migrations.Database
@@ -24,7 +21,7 @@ namespace Mongo.Migration.Test.Migrations.Database
             }
             catch (BsonSerializationException ex)
             {
-                this._logger.Warn(ex);
+                _logger.Warn(ex);
             }
         }
 

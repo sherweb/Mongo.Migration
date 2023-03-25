@@ -1,12 +1,9 @@
 ﻿using FluentAssertions;
-
 using Mongo.Migration.Documents;
 using Mongo.Migration.Documents.Serializers;
-
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
-
 using NUnit.Framework;
 
 namespace Mongo.Migration.Test.Documents.Serializers
@@ -27,7 +24,7 @@ namespace Mongo.Migration.Test.Documents.Serializers
             var args = new BsonDeserializationArgs { NominalType = typeof(DocumentVersion) };
 
             // Act 
-            DocumentVersion result = this._serializer.Deserialize(context, args);
+            DocumentVersion result = _serializer.Deserialize(context, args);
 
             // Assert 
             result.Should().BeOfType<DocumentVersion>();
@@ -44,7 +41,7 @@ namespace Mongo.Migration.Test.Documents.Serializers
             var version = new DocumentVersion("0.0.1");
 
             // Act 
-            this._serializer.Serialize(context, args, version);
+            _serializer.Serialize(context, args, version);
 
             // Assert 
             BsonDocument document = writer.Document;
@@ -54,7 +51,7 @@ namespace Mongo.Migration.Test.Documents.Serializers
         [SetUp]
         public void SetUp()
         {
-            this._serializer = new DocumentVersionSerializer();
+            _serializer = new DocumentVersionSerializer();
         }
 
         private static BsonDocumentReader CreateVersionReader(BsonDocument document)

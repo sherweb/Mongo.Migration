@@ -1,10 +1,7 @@
 ﻿using FluentAssertions;
-
 using Mongo.Migration.Documents;
 using Mongo.Migration.Services;
-
 using MongoDB.Bson.Serialization;
-
 using NUnit.Framework;
 
 namespace Mongo.Migration.Test.MongoDB
@@ -15,20 +12,20 @@ namespace Mongo.Migration.Test.MongoDB
         [SetUp]
         public void SetUp()
         {
-            this.OnSetUp();
+            OnSetUp();
         }
 
         [TearDown]
         public void TearDown()
         {
-            this.Dispose();
+            Dispose();
         }
 
         [Test]
         public void Then_serializer_is_registered()
         {
             // Arrange 
-            var migrationService = this._components.Get<IMigrationService>();
+            var migrationService = _components.Get<IMigrationService>();
 
             // Act
             migrationService.Migrate();

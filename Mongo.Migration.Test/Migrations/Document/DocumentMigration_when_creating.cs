@@ -1,7 +1,5 @@
 ﻿using FluentAssertions;
-
 using Mongo.Migration.Test.TestDoubles;
-
 using NUnit.Framework;
 
 namespace Mongo.Migration.Test.Migrations.Document

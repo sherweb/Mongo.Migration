@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -17,23 +16,23 @@ namespace Mongo.Migration.Startup.DotNetCore
 
         public MongoMigrationHostedService(IHostApplicationLifetime applicationLifetime, IMongoMigration migration, ILogger<MongoMigrationHostedService> logger)
         {
-            this._applicationLifetime = applicationLifetime;
-            this._logger = logger;
-            this._migration = migration;
+            _applicationLifetime = applicationLifetime;
+            _logger = logger;
+            _migration = migration;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
             try
             {
-                this._logger.LogInformation("Running migration. Please wait....");
-                this._migration.Run();
-                this._logger.LogInformation("Migration has been done");
+                _logger.LogInformation("Running migration. Please wait....");
+                _migration.Run();
+                _logger.LogInformation("Migration has been done");
             }
             catch (Exception ex)
             {
-                this._logger.LogError(ex, ex.GetType().ToString());
-                this._applicationLifetime.StopApplication();
+                _logger.LogError(ex, ex.GetType().ToString());
+                _applicationLifetime.StopApplication();
             }
 
             return Task.CompletedTask;

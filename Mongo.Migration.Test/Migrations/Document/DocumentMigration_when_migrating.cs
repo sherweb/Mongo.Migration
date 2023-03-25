@@ -1,9 +1,6 @@
 ﻿using FluentAssertions;
-
 using Mongo.Migration.Test.TestDoubles;
-
 using MongoDB.Bson;
-
 using NUnit.Framework;
 
 namespace Mongo.Migration.Test.Migrations.Document

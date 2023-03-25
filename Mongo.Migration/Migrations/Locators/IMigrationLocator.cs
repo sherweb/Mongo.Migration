@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-
 using Mongo.Migration.Documents;
 
 namespace Mongo.Migration.Migrations.Locators

@@ -1,6 +1,5 @@
 ﻿using Mongo.Migration.Exceptions;
 using Mongo.Migration.Migrations.Adapters;
-
 using MongoDB.Driver;
 
 namespace Mongo.Migration.Startup.Static

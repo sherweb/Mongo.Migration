@@ -1,12 +1,8 @@
 ﻿using System.Linq;
-
 using FluentAssertions;
-
 using Mongo.Migration.Migrations.Document;
 using Mongo.Migration.Test.TestDoubles;
-
 using MongoDB.Bson;
-
 using NUnit.Framework;
 
 namespace Mongo.Migration.Test.Migrations.Document
@@ -19,15 +15,15 @@ namespace Mongo.Migration.Test.Migrations.Document
         [SetUp]
         public void SetUp()
         {
-            this.OnSetUp();
+            OnSetUp();
 
-            this._runner = this._components.Get<IDocumentMigrationRunner>();
+            _runner = _components.Get<IDocumentMigrationRunner>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            this.Dispose();
+            Dispose();
         }
 
         [Test]
@@ -41,7 +37,7 @@ namespace Mongo.Migration.Test.Migrations.Document
             };
 
             // Act
-            this._runner.Run(typeof(TestDocumentWithTwoMigration), document);
+            _runner.Run(typeof(TestDocumentWithTwoMigration), document);
 
             // Assert
             document.Names.ToList()[1].Should().Be("Dors");
@@ -60,7 +56,7 @@ namespace Mongo.Migration.Test.Migrations.Document
             };
 
             // Act
-            this._runner.Run(typeof(TestDocumentWithTwoMigrationMiddleVersion), document);
+            _runner.Run(typeof(TestDocumentWithTwoMigrationMiddleVersion), document);
 
             // Assert
             document.Names.ToList()[1].Should().Be("Doors");

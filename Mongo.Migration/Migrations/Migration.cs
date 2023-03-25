@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Mongo.Migration.Documents;
 using Mongo.Migration.Migrations.Document;
 

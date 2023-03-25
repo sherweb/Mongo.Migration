@@ -1,9 +1,7 @@
 ﻿using FluentAssertions;
-
 using Mongo.Migration.Documents;
 using Mongo.Migration.Migrations.Database;
 using Mongo.Migration.Test.TestDoubles;
-
 using NUnit.Framework;
 
 namespace Mongo.Migration.Test.Migrations.Database
@@ -17,22 +15,22 @@ namespace Mongo.Migration.Test.Migrations.Database
         {
             base.OnSetUp(databaseMigrationVersion);
 
-            this._runner = this._components.Get<IDatabaseMigrationRunner>();
+            _runner = _components.Get<IDatabaseMigrationRunner>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            this.Dispose();
+            Dispose();
         }
 
         [Test]
         public void When_database_has_migrations_Then_down_all_migrations()
         {
-            this.OnSetUp(DocumentVersion.Default());
+            OnSetUp(DocumentVersion.Default());
 
             // Arrange
-            this.InsertMigrations(
+            InsertMigrations(
                 new DatabaseMigration[]
                 {
                     new TestDatabaseMigration_0_0_1(),
@@ -41,20 +39,20 @@ namespace Mongo.Migration.Test.Migrations.Database
                 });
 
             // Act
-            this._runner.Run(this._db);
+            _runner.Run(_db);
 
             // Assert
-            var migrations = this.GetMigrationHistory();
+            var migrations = GetMigrationHistory();
             migrations.Should().BeEmpty();
         }
 
         [Test]
         public void When_database_has_migrations_Then_down_to_selected_migration()
         {
-            this.OnSetUp(new DocumentVersion("0.0.1"));
+            OnSetUp(new DocumentVersion("0.0.1"));
 
             // Arrange
-            this.InsertMigrations(
+            InsertMigrations(
                 new DatabaseMigration[]
                 {
                     new TestDatabaseMigration_0_0_1(),
@@ -63,10 +61,10 @@ namespace Mongo.Migration.Test.Migrations.Database
                 });
 
             // Act
-            this._runner.Run(this._db);
+            _runner.Run(_db);
 
             // Assert
-            var migrations = this.GetMigrationHistory();
+            var migrations = GetMigrationHistory();
             migrations.Should().NotBeEmpty();
             migrations.Should().OnlyContain(m => m.Version == "0.0.1");
         }

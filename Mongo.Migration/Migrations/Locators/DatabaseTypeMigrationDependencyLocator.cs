@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Mongo.Migration.Migrations.Adapters;
 using Mongo.Migration.Migrations.Database;
 
@@ -14,16 +13,16 @@ namespace Mongo.Migration.Migrations.Locators
         {
             get
             {
-                if (this._migrations == null)
+                if (_migrations == null)
                 {
-                    this.Locate();
+                    Locate();
                 }
 
-                return this._migrations;
+                return _migrations;
             }
             set
             {
-                this._migrations = value;
+                _migrations = value;
             }
         }
 

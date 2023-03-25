@@ -1,7 +1,5 @@
 ﻿using FluentAssertions;
-
 using Mongo.Migration.Documents;
-
 using NUnit.Framework;
 
 namespace Mongo.Migration.Test.Documents
@@ -18,7 +16,7 @@ namespace Mongo.Migration.Test.Documents
         [Test]
         public void If_higherVersion_lte_equalLowerVersion_Then_false()
         {
-            bool result = this.higherVersion <= this.lowerVersion;
+            bool result = higherVersion <= lowerVersion;
 
             result.Should().BeFalse();
         }
@@ -26,7 +24,7 @@ namespace Mongo.Migration.Test.Documents
         [Test]
         public void If_lowerVersion_gt_higherVersion_Then_false()
         {
-            bool result = this.lowerVersion > this.higherVersion;
+            bool result = lowerVersion > higherVersion;
 
             result.Should().BeFalse();
         }
@@ -34,7 +32,7 @@ namespace Mongo.Migration.Test.Documents
         [Test]
         public void If_lowerVersion_gte_equalLowerVersion_Then_true()
         {
-            bool result = this.lowerVersion >= this.equalLowerVersion;
+            bool result = lowerVersion >= equalLowerVersion;
 
             result.Should().BeTrue();
         }
@@ -42,7 +40,7 @@ namespace Mongo.Migration.Test.Documents
         [Test]
         public void If_lowerVersion_gte_higherVersion_Then_false()
         {
-            bool result = this.lowerVersion >= this.higherVersion;
+            bool result = lowerVersion >= higherVersion;
 
             result.Should().BeFalse();
         }
@@ -50,7 +48,7 @@ namespace Mongo.Migration.Test.Documents
         [Test]
         public void If_lowerVersion_lt_higherVersion_Then_true()
         {
-            bool result = this.lowerVersion < this.higherVersion;
+            bool result = lowerVersion < higherVersion;
 
             result.Should().BeTrue();
         }
@@ -58,7 +56,7 @@ namespace Mongo.Migration.Test.Documents
         [Test]
         public void If_lowerVersion_lte_equalLowerVersion_Then_true()
         {
-            bool result = this.lowerVersion <= this.equalLowerVersion;
+            bool result = lowerVersion <= equalLowerVersion;
 
             result.Should().BeTrue();
         }

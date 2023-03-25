@@ -1,5 +1,4 @@
 ﻿using LightInject;
-
 using Mongo.Migration.Documents.Locators;
 using Mongo.Migration.Documents.Serializers;
 using Mongo.Migration.Migrations.Adapters;
@@ -8,7 +7,6 @@ using Mongo.Migration.Migrations.Document;
 using Mongo.Migration.Migrations.Locators;
 using Mongo.Migration.Services;
 using Mongo.Migration.Services.Interceptors;
-
 using MongoDB.Driver;
 
 namespace Mongo.Migration.Startup.Static
@@ -21,57 +19,57 @@ namespace Mongo.Migration.Startup.Static
 
         public ComponentRegistry(IMongoMigrationSettings settings, IContainerAdapter containerAdapter = null)
         {
-            this._settings = settings;
+            _settings = settings;
 
             if (containerAdapter == null)
             {
                 containerAdapter = new LightInjectAdapter(new ServiceContainer());
             }
 
-            this._containerAdapter = containerAdapter;
+            _containerAdapter = containerAdapter;
         }
 
         public void RegisterComponents(IMongoClient client)
         {
-            this.RegisterDefaults();
+            RegisterDefaults();
 
-            this._containerAdapter.RegisterInstance<IMongoClient>(client);
+            _containerAdapter.RegisterInstance<IMongoClient>(client);
 
-            this._containerAdapter.Register<IMigrationService, MigrationService>();
+            _containerAdapter.Register<IMigrationService, MigrationService>();
         }
 
         public TComponent Get<TComponent>()
             where TComponent : class
         {
-            return (TComponent)this._containerAdapter.GetInstance(typeof(TComponent));
+            return (TComponent)_containerAdapter.GetInstance(typeof(TComponent));
         }
 
         private void RegisterDefaults()
         {
-            this._containerAdapter.RegisterInstance<IContainerProvider>(this._containerAdapter);
+            _containerAdapter.RegisterInstance<IContainerProvider>(_containerAdapter);
 
-            this._containerAdapter.Register(typeof(IMigrationLocator<>), typeof(TypeMigrationDependencyLocator<>));
+            _containerAdapter.Register(typeof(IMigrationLocator<>), typeof(TypeMigrationDependencyLocator<>));
 
-            this._containerAdapter.RegisterInstance<IMongoMigrationSettings>(this._settings);
+            _containerAdapter.RegisterInstance<IMongoMigrationSettings>(_settings);
 
-            this._containerAdapter.RegisterSingleton<ICollectionLocator, CollectionLocator>();
-            this._containerAdapter.RegisterSingleton<IDatabaseTypeMigrationDependencyLocator, DatabaseTypeMigrationDependencyLocator>();
-            this._containerAdapter.RegisterSingleton<IRuntimeVersionLocator, RuntimeVersionLocator>();
-            this._containerAdapter.RegisterSingleton<IStartUpVersionLocator, StartUpVersionLocator>();
+            _containerAdapter.RegisterSingleton<ICollectionLocator, CollectionLocator>();
+            _containerAdapter.RegisterSingleton<IDatabaseTypeMigrationDependencyLocator, DatabaseTypeMigrationDependencyLocator>();
+            _containerAdapter.RegisterSingleton<IRuntimeVersionLocator, RuntimeVersionLocator>();
+            _containerAdapter.RegisterSingleton<IStartUpVersionLocator, StartUpVersionLocator>();
 
-            this._containerAdapter.Register<IDocumentVersionService, DocumentVersionService>();
-            this._containerAdapter.Register<IDatabaseVersionService, DatabaseVersionService>();
-            this._containerAdapter.Register<IMigrationInterceptorFactory, MigrationInterceptorFactory>();
-            this._containerAdapter.Register<DocumentVersionSerializer, DocumentVersionSerializer>();
+            _containerAdapter.Register<IDocumentVersionService, DocumentVersionService>();
+            _containerAdapter.Register<IDatabaseVersionService, DatabaseVersionService>();
+            _containerAdapter.Register<IMigrationInterceptorFactory, MigrationInterceptorFactory>();
+            _containerAdapter.Register<DocumentVersionSerializer, DocumentVersionSerializer>();
 
-            this._containerAdapter.Register<IStartUpDocumentMigrationRunner, StartUpDocumentMigrationRunner>();
-            this._containerAdapter.Register<IDocumentMigrationRunner, DocumentMigrationRunner>();
-            this._containerAdapter.Register<IMigrationInterceptorProvider, MigrationInterceptorProvider>();
+            _containerAdapter.Register<IStartUpDocumentMigrationRunner, StartUpDocumentMigrationRunner>();
+            _containerAdapter.Register<IDocumentMigrationRunner, DocumentMigrationRunner>();
+            _containerAdapter.Register<IMigrationInterceptorProvider, MigrationInterceptorProvider>();
 
-            this._containerAdapter.Register<IStartUpDatabaseMigrationRunner, StartUpDatabaseMigrationRunner>();
-            this._containerAdapter.Register<IDatabaseMigrationRunner, DatabaseMigrationRunner>();
+            _containerAdapter.Register<IStartUpDatabaseMigrationRunner, StartUpDatabaseMigrationRunner>();
+            _containerAdapter.Register<IDatabaseMigrationRunner, DatabaseMigrationRunner>();
 
-            this._containerAdapter.Register<IMongoMigration, MongoMigration>();
+            _containerAdapter.Register<IMongoMigration, MongoMigration>();
         }
     }
 }

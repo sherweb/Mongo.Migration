@@ -1,5 +1,4 @@
 using Mongo.Migration.Documents;
-
 using MongoDB.Driver;
 
 namespace Mongo.Migration.Startup

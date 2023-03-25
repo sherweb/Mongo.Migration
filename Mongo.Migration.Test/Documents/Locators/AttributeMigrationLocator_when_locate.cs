@@ -1,8 +1,6 @@
 ﻿using FluentAssertions;
-
 using Mongo.Migration.Documents.Locators;
 using Mongo.Migration.Test.TestDoubles;
-
 using NUnit.Framework;
 
 namespace Mongo.Migration.Test.Documents.Locators

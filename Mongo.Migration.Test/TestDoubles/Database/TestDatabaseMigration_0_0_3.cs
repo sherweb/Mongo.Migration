@@ -1,5 +1,4 @@
 ﻿using Mongo.Migration.Migrations.Database;
-
 using MongoDB.Driver;
 
 namespace Mongo.Migration.Test.TestDoubles

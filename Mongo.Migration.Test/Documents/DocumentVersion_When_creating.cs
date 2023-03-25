@@ -1,10 +1,7 @@
 ﻿using System;
-
 using FluentAssertions;
-
 using Mongo.Migration.Documents;
 using Mongo.Migration.Exceptions;
-
 using NUnit.Framework;
 
 namespace Mongo.Migration.Test.Documents

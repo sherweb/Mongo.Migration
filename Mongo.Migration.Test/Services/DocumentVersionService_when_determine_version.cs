@@ -1,11 +1,8 @@
 ﻿using System;
-
 using FluentAssertions;
-
 using Mongo.Migration.Exceptions;
 using Mongo.Migration.Services;
 using Mongo.Migration.Test.TestDoubles;
-
 using NUnit.Framework;
 
 namespace Mongo.Migration.Test.Services
@@ -18,15 +15,15 @@ namespace Mongo.Migration.Test.Services
         [SetUp]
         public void SetUp()
         {
-            this.OnSetUp();
+            OnSetUp();
 
-            this._service = this._components.Get<IDocumentVersionService>();
+            _service = _components.Get<IDocumentVersionService>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            this.Dispose();
+            Dispose();
         }
 
         [Test]
@@ -36,7 +33,7 @@ namespace Mongo.Migration.Test.Services
             var document = new TestDocumentWithTwoMigrationMiddleVersion();
 
             // Act
-            this._service.DetermineVersion(document);
+            _service.DetermineVersion(document);
 
             // Assert
             document.Version.Should().Be("0.0.1");
@@ -49,7 +46,7 @@ namespace Mongo.Migration.Test.Services
             var document = new TestDocumentWithTwoMigrationHighestVersion();
 
             // Act
-            this._service.DetermineVersion(document);
+            _service.DetermineVersion(document);
 
             // Assert
             document.Version.Should().Be("0.0.2");
@@ -62,7 +59,7 @@ namespace Mongo.Migration.Test.Services
             var document = new TestDocumentWithTwoMigrationHighestVersion { Version = "0.0.1" };
 
             // Act// Act
-            Action checkAction = () => { this._service.DetermineVersion(document); };
+            Action checkAction = () => { _service.DetermineVersion(document); };
 
             // Assert
             checkAction.Should().Throw<VersionViolationException>();

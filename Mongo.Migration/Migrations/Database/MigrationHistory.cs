@@ -1,5 +1,4 @@
 ﻿using Mongo.Migration.Documents;
-
 using MongoDB.Bson;
 
 namespace Mongo.Migration.Migrations.Database

@@ -1,12 +1,8 @@
 ﻿using System;
-
 using FluentAssertions;
-
 using Mongo.Migration.Exceptions;
 using Mongo.Migration.Startup.Static;
-
 using NSubstitute;
-
 using NUnit.Framework;
 
 namespace Mongo.Migration.Test.Services.Initializers

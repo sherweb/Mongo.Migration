@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-
 using Mongo.Migration.Extensions;
 using Mongo.Migration.Migrations.Adapters;
 
@@ -15,18 +14,18 @@ namespace Mongo.Migration.Migrations.Locators
 
         public TypeMigrationDependencyLocator(IContainerProvider containerProvider)
         {
-            this._containerProvider = containerProvider;
+            _containerProvider = containerProvider;
         }
 
         public override void Locate()
         {
             var migrationTypes =
-                (from assembly in this.Assemblies
+                (from assembly in Assemblies
                  from type in assembly.GetTypes()
                  where typeof(TMigrationType).IsAssignableFrom(type) && !type.IsAbstract
                  select type).Distinct(new TypeComparer());
 
-            this.Migrations = migrationTypes.Select(this.GetMigrationInstance).ToMigrationDictionary();
+            Migrations = migrationTypes.Select(GetMigrationInstance).ToMigrationDictionary();
         }
 
         private TMigrationType GetMigrationInstance(Type type)
@@ -38,7 +37,7 @@ namespace Mongo.Migration.Migrations.Locators
                 object[] args = constructor
                     .GetParameters()
                     .Select(o => o.ParameterType)
-                    .Select(o => this._containerProvider.GetInstance(o))
+                    .Select(o => _containerProvider.GetInstance(o))
                     .ToArray();
 
                 return Activator.CreateInstance(type, args) as TMigrationType;
