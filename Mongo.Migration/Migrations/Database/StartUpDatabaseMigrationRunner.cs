@@ -30,14 +30,7 @@ namespace Mongo.Migration.Migrations.Database
                 throw new MongoMigrationNoMongoClientException();
             }
 
-            if (settings.ClientSettings != null)
-            {
-                _client = new MongoClient(settings.ClientSettings);
-            }
-            else
-            {
-                _client = new MongoClient(settings.ConnectionString);
-            }
+            _client = settings.ClientSettings != null ? new MongoClient(settings.ClientSettings) : new MongoClient(settings.ConnectionString);
 
             _databaseName = settings.Database;
         }
