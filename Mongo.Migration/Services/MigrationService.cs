@@ -12,13 +12,9 @@ namespace Mongo.Migration.Services
     internal class MigrationService : IMigrationService
     {
         private readonly ILogger<MigrationService> _logger;
-
         private readonly IMigrationInterceptorProvider _provider;
-
         private readonly DocumentVersionSerializer _serializer;
-
         private readonly IStartUpDatabaseMigrationRunner _startUpDatabaseMigrationRunner;
-
         private readonly IStartUpDocumentMigrationRunner _startUpDocumentMigrationRunner;
 
         public MigrationService(
@@ -46,7 +42,6 @@ namespace Mongo.Migration.Services
         {
             BsonSerializer.RegisterSerializationProvider(_provider);
             RegisterSerializer();
-
             OnStartup();
         }
 

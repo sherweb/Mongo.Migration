@@ -14,7 +14,6 @@ namespace Mongo.Migration.Startup.Static
     internal class ComponentRegistry : IComponentRegistry
     {
         private readonly IContainerAdapter _containerAdapter;
-
         private readonly IMongoMigrationSettings _settings;
 
         public ComponentRegistry(IMongoMigrationSettings settings, IContainerAdapter containerAdapter = null)
@@ -32,9 +31,7 @@ namespace Mongo.Migration.Startup.Static
         public void RegisterComponents(IMongoClient client)
         {
             RegisterDefaults();
-
             _containerAdapter.RegisterInstance<IMongoClient>(client);
-
             _containerAdapter.Register<IMigrationService, MigrationService>();
         }
 
@@ -47,9 +44,7 @@ namespace Mongo.Migration.Startup.Static
         private void RegisterDefaults()
         {
             _containerAdapter.RegisterInstance<IContainerProvider>(_containerAdapter);
-
             _containerAdapter.Register(typeof(IMigrationLocator<>), typeof(TypeMigrationDependencyLocator<>));
-
             _containerAdapter.RegisterInstance<IMongoMigrationSettings>(_settings);
 
             _containerAdapter.RegisterSingleton<ICollectionLocator, CollectionLocator>();

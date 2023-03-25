@@ -9,9 +9,7 @@ namespace Mongo.Migration.Startup.DotNetCore
     public class MongoMigrationHostedService : IHostedService
     {
         private readonly IHostApplicationLifetime _applicationLifetime;
-
         private readonly ILogger<MongoMigrationHostedService> _logger;
-
         private readonly IMongoMigration _migration;
 
         public MongoMigrationHostedService(IHostApplicationLifetime applicationLifetime, IMongoMigration migration, ILogger<MongoMigrationHostedService> logger)

@@ -11,9 +11,7 @@ namespace Mongo.Migration.Startup.DotNetCore
     public class MongoMigrationStartupFilter : IStartupFilter
     {
         private readonly IHostApplicationLifetime _applicationLifetime;
-
         private readonly ILogger<MongoMigrationStartupFilter> _logger;
-
         private readonly IMongoMigration _migration;
 
         public MongoMigrationStartupFilter(IHostApplicationLifetime applicationLifetime, IServiceScopeFactory serviceScopeFactory)
@@ -33,9 +31,7 @@ namespace Mongo.Migration.Startup.DotNetCore
             try
             {
                 _logger.LogInformation("Running migration. Please wait....");
-
                 _migration.Run();
-
                 _logger.LogInformation("Migration has been done");
             }
             catch (Exception ex)

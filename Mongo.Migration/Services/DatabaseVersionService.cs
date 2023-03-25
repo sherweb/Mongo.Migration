@@ -10,9 +10,7 @@ namespace Mongo.Migration.Services
     internal class DatabaseVersionService : IDatabaseVersionService
     {
         private const string MigrationsCollectionName = "_migrations";
-
         private readonly IDatabaseTypeMigrationDependencyLocator _migrationLocator;
-
         private readonly IMongoMigrationSettings _mongoMigrationSettings;
 
         public DatabaseVersionService(

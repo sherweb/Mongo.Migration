@@ -10,7 +10,6 @@ namespace Mongo.Migration.Services.Interceptors
         where TDocument : class, IDocument
     {
         private readonly IDocumentVersionService _documentVersionService;
-
         private readonly IDocumentMigrationRunner _migrationRunner;
 
         public MigrationInterceptor(IDocumentMigrationRunner migrationRunner, IDocumentVersionService documentVersionService)
@@ -34,8 +33,7 @@ namespace Mongo.Migration.Services.Interceptors
 
             _migrationRunner.Run(typeof(TDocument), document);
 
-            var migratedContext =
-                BsonDeserializationContext.CreateRoot(new BsonDocumentReader(document));
+            var migratedContext = BsonDeserializationContext.CreateRoot(new BsonDocumentReader(document));
 
             return base.Deserialize(migratedContext, args);
         }
