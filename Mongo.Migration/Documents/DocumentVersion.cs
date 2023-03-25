@@ -117,12 +117,7 @@ namespace Mongo.Migration.Documents
         {
             return a == b || a > b;
         }
-
-        public bool Equals(DocumentVersion other)
-        {
-            return other.Major == Major && other.Minor == Minor && other.Revision == Revision;
-        }
-
+        
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -130,12 +125,7 @@ namespace Mongo.Migration.Documents
                 return false;
             }
 
-            if (obj.GetType() != typeof(DocumentVersion))
-            {
-                return false;
-            }
-
-            return Equals((DocumentVersion)obj);
+            return obj is DocumentVersion version && Equals(version);
         }
 
         public override int GetHashCode()
@@ -148,10 +138,15 @@ namespace Mongo.Migration.Documents
                 return result;
             }
         }
+        
+        private bool Equals(DocumentVersion other)
+        {
+            return other.Major == Major && other.Minor == Minor && other.Revision == Revision;
+        }
 
         private static int ParseVersionPart(string value)
         {
-            string revisionString = value;
+            var revisionString = value;
             if (!int.TryParse(revisionString, out var target))
             {
                 throw new InvalidVersionValueException(revisionString);
