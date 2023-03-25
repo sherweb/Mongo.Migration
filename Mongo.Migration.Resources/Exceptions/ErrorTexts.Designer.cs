@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Mongo.Migration.Exceptions {
+namespace Mongo.Migration.Resources.Exceptions {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Mongo.Migration.Exceptions {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Mongo.Migration.Exceptions.ErrorTexts", typeof(ErrorTexts).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Mongo.Migration.Resources.Exceptions.ErrorTexts", typeof(ErrorTexts).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

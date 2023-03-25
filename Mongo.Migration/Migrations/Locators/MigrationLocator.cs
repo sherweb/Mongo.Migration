@@ -7,6 +7,7 @@ using Mongo.Migration.Documents;
 using Mongo.Migration.Exceptions;
 using Mongo.Migration.Extensions;
 using NLog;
+using Mongo.Migration.Resources.Exceptions;
 
 namespace Mongo.Migration.Migrations.Locators
 {
