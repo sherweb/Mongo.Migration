@@ -8,23 +8,17 @@ namespace Mongo.Migration.Documents
     public struct DocumentVersion : IComparable<DocumentVersion>
     {
         private const char VERSION_SPLIT_CHAR = '.';
-
         private const int MAX_LENGTH = 3;
-
         public int Major { get; init; }
-
         public int Minor { get; init; }
-
         public int Revision { get; init; }
 
         static DocumentVersion()
-        {
-           BsonSerializer.RegisterSerializer(typeof(DocumentVersion), new DocumentVersionSerializer());
-        }
+            => BsonSerializer.RegisterSerializer(typeof(DocumentVersion), new DocumentVersionSerializer());
 
         public DocumentVersion(string version)
         {
-            string[] versionParts = version.Split(VERSION_SPLIT_CHAR);
+            var versionParts = version.Split(VERSION_SPLIT_CHAR);
 
             if (versionParts.Length != MAX_LENGTH)
             {
@@ -111,7 +105,7 @@ namespace Mongo.Migration.Documents
         {
             return a == b || a > b;
         }
-        
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -132,7 +126,7 @@ namespace Mongo.Migration.Documents
                 return result;
             }
         }
-        
+
         private bool Equals(DocumentVersion other)
         {
             return other.Major == Major && other.Minor == Minor && other.Revision == Revision;

@@ -30,11 +30,11 @@ namespace Mongo.Migration.Migrations.Locators
 
         private TMigrationType GetMigrationInstance(Type type)
         {
-            ConstructorInfo constructor = type.GetConstructors()[0];
+            var constructor = type.GetConstructors()[0];
 
             if (constructor != null)
             {
-                object[] args = constructor
+                var args = constructor
                     .GetParameters()
                     .Select(o => o.ParameterType)
                     .Select(o => _containerProvider.GetInstance(o))

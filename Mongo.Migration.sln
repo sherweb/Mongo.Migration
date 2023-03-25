@@ -14,6 +14,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mongo.Migration", "Mongo.Mi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mongo.Migration.Test", "Mongo.Migration.Test\Mongo.Migration.Test.csproj", "{5A168879-B891-40A2-B3AB-0CF2022FDE89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mongo.Migration.Resources", "Mongo.Migration.Resources\Mongo.Migration.Resources.csproj", "{B6FA0BDA-6CE2-43D2-B01C-E0FC2DB54C56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,14 @@ Global
 		{5A168879-B891-40A2-B3AB-0CF2022FDE89}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5A168879-B891-40A2-B3AB-0CF2022FDE89}.Release|x64.ActiveCfg = Release|Any CPU
 		{5A168879-B891-40A2-B3AB-0CF2022FDE89}.Release|x64.Build.0 = Release|Any CPU
+		{B6FA0BDA-6CE2-43D2-B01C-E0FC2DB54C56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6FA0BDA-6CE2-43D2-B01C-E0FC2DB54C56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6FA0BDA-6CE2-43D2-B01C-E0FC2DB54C56}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B6FA0BDA-6CE2-43D2-B01C-E0FC2DB54C56}.Debug|x64.Build.0 = Debug|Any CPU
+		{B6FA0BDA-6CE2-43D2-B01C-E0FC2DB54C56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6FA0BDA-6CE2-43D2-B01C-E0FC2DB54C56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6FA0BDA-6CE2-43D2-B01C-E0FC2DB54C56}.Release|x64.ActiveCfg = Release|Any CPU
+		{B6FA0BDA-6CE2-43D2-B01C-E0FC2DB54C56}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -20,10 +20,7 @@ namespace Mongo.Migration.Migrations.Locators
 
                 return _migrations;
             }
-            set
-            {
-                _migrations = value;
-            }
+            set => _migrations = value;
         }
 
         public DatabaseTypeMigrationDependencyLocator(IContainerProvider containerProvider)

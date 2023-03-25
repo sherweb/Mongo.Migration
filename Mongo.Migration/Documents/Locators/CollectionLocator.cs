@@ -24,7 +24,7 @@ namespace Mongo.Migration.Documents.Locators
                 from a in AppDomain.CurrentDomain.GetAssemblies()
                 from t in a.GetTypes()
                 let attributes = t.GetCustomAttributes(typeof(CollectionLocation), true)
-                where attributes != null && attributes.Length > 0
+                where attributes is { Length: > 0 }
                 select new { Type = t, Attributes = attributes.Cast<CollectionLocation>() };
 
             var versions = new Dictionary<Type, CollectionLocationInformation>();

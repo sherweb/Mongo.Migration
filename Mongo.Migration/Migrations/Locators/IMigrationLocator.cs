@@ -4,7 +4,7 @@ using Mongo.Migration.Documents;
 
 namespace Mongo.Migration.Migrations.Locators
 {
-    public interface IMigrationLocator<TMigrationType>
+    public interface IMigrationLocator<out TMigrationType>
         where TMigrationType : class, IMigration
     {
         IEnumerable<TMigrationType> GetMigrations(Type type);

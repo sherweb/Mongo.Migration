@@ -39,9 +39,7 @@ namespace Mongo.Migration.Migrations.Locators
 
         public IEnumerable<TMigrationType> GetMigrations(Type type)
         {
-            IReadOnlyCollection<TMigrationType> migrations;
-            Migrations.TryGetValue(type, out migrations);
-
+            Migrations.TryGetValue(type, out var migrations);
             return migrations ?? Enumerable.Empty<TMigrationType>();
         }
 
