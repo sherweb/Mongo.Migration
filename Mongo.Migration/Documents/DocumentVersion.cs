@@ -134,10 +134,9 @@ namespace Mongo.Migration.Documents
 
         private static int ParseVersionPart(string value)
         {
-            var revisionString = value;
-            if (!int.TryParse(revisionString, out var target))
+            if (!int.TryParse(value, out var target))
             {
-                throw new InvalidVersionValueException(revisionString);
+                throw new InvalidVersionValueException(value);
             }
 
             return target;
