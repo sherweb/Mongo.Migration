@@ -37,6 +37,6 @@
     <None Include="op-icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mongo.Migration.Resources\Mongo.Migration.Resources.csproj" />
+    <Folder Include="Resources" />
   </ItemGroup>
 </Project>
