@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using Mongo.Migration.Migrations.Adapters;
+using Microsoft.Extensions.DependencyInjection;
 using Mongo.Migration.Migrations.Database;
+using Mongo.Migration.Startup;
 
 namespace Mongo.Migration.Migrations.Locators
 {
@@ -14,21 +14,17 @@ namespace Mongo.Migration.Migrations.Locators
         {
             get
             {
-                if (this._migrations == null)
+                if (_migrations == null)
                 {
-                    this.Locate();
+                    Locate();
                 }
 
-                return this._migrations;
+                return _migrations;
             }
-            set
-            {
-                this._migrations = value;
-            }
+            set => _migrations = value;
         }
 
-        public DatabaseTypeMigrationDependencyLocator(IContainerProvider containerProvider)
-            : base(containerProvider)
+        public DatabaseTypeMigrationDependencyLocator(IServiceScopeFactory scopeFactory) : base(scopeFactory)
         {
         }
     }

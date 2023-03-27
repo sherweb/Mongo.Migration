@@ -1,32 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Mongo.Migration.Documents.Attributes;
+using Mongo.Migration.Migrations.Locators;
 
 namespace Mongo.Migration.Documents.Locators
 {
     internal class RuntimeVersionLocator : AbstractLocator<DocumentVersion, Type>, IRuntimeVersionLocator
     {
+        private readonly IMongoMigrationAssemblyService _mongoMigrationAssemblyService;
+
+        public RuntimeVersionLocator(IMongoMigrationAssemblyService mongoMigrationAssemblyService)
+        {
+            _mongoMigrationAssemblyService = mongoMigrationAssemblyService;
+        }
+        
         public override DocumentVersion? GetLocateOrNull(Type identifier)
         {
-            if (!this.LocatesDictionary.ContainsKey(identifier))
+            if (!LocatesDictionary.ContainsKey(identifier))
             {
                 return null;
             }
 
-            this.LocatesDictionary.TryGetValue(identifier, out var value);
+            LocatesDictionary.TryGetValue(identifier, out var value);
             return value;
         }
 
         public override void Locate()
         {
             var types =
-                from a in AppDomain.CurrentDomain.GetAssemblies()
+                from a in _mongoMigrationAssemblyService.GetAssemblies()
                 from t in a.GetTypes()
                 let attributes = t.GetCustomAttributes(typeof(RuntimeVersion), true)
-                where attributes != null && attributes.Length > 0
-                select new { Type = t, Attributes = attributes.Cast<RuntimeVersion>() };
+                where attributes is { Length: > 0 }
+                select new 
+                { 
+                    Type = t, 
+                    Attributes = attributes.Cast<RuntimeVersion>() 
+                };
 
             var versions = new Dictionary<Type, DocumentVersion>();
 
@@ -36,7 +47,7 @@ namespace Mongo.Migration.Documents.Locators
                 versions.Add(type.Type, version);
             }
 
-            this.LocatesDictionary = versions;
+            LocatesDictionary = versions;
         }
     }
 }

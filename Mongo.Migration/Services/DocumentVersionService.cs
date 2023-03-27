@@ -1,28 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Mongo.Migration.Documents;
 using Mongo.Migration.Documents.Locators;
 using Mongo.Migration.Exceptions;
 using Mongo.Migration.Migrations.Document;
 using Mongo.Migration.Migrations.Locators;
 using Mongo.Migration.Startup;
-
 using MongoDB.Bson;
 
 namespace Mongo.Migration.Services
 {
     internal class DocumentVersionService : IDocumentVersionService
     {
-        private static readonly string VERSION_FIELD_NAME = "Version";
-
+        private const string VERSION_FIELD_NAME = "Version";
         private readonly IMigrationLocator<IDocumentMigration> _migrationLocator;
-
         private readonly IRuntimeVersionLocator _runtimeVersionLocator;
-
         private readonly IStartUpVersionLocator _startUpVersionLocator;
-
         private readonly string _versionFieldName;
 
         public DocumentVersionService(
@@ -31,35 +25,34 @@ namespace Mongo.Migration.Services
             IStartUpVersionLocator startUpVersionLocator,
             IMongoMigrationSettings mongoMigrationSettings)
         {
-            this._migrationLocator = migrationLocator;
-            this._runtimeVersionLocator = runtimeVersionLocator;
-            this._startUpVersionLocator = startUpVersionLocator;
-            this._versionFieldName = string.IsNullOrWhiteSpace(mongoMigrationSettings.VersionFieldName)
+            _migrationLocator = migrationLocator;
+            _runtimeVersionLocator = runtimeVersionLocator;
+            _startUpVersionLocator = startUpVersionLocator;
+            _versionFieldName = string.IsNullOrWhiteSpace(mongoMigrationSettings.VersionFieldName)
                                          ? VERSION_FIELD_NAME
                                          : mongoMigrationSettings.VersionFieldName;
         }
 
         public string GetVersionFieldName()
         {
-            return this._versionFieldName;
+            return _versionFieldName;
         }
 
         public DocumentVersion GetCurrentOrLatestMigrationVersion(Type type)
         {
-            var latestVersion = this._migrationLocator.GetLatestVersion(type);
-            return this.GetCurrentVersion(type) ?? latestVersion;
+            var latestVersion = _migrationLocator.GetLatestVersion(type);
+            return GetCurrentVersion(type) ?? latestVersion;
         }
 
         public DocumentVersion GetCollectionVersion(Type type)
         {
-            var version = this.GetCurrentOrLatestMigrationVersion(type);
-            return this._startUpVersionLocator.GetLocateOrNull(type) ?? version;
+            var version = GetCurrentOrLatestMigrationVersion(type);
+            return _startUpVersionLocator.GetLocateOrNull(type) ?? version;
         }
 
         public DocumentVersion GetVersionOrDefault(BsonDocument document)
         {
-            BsonValue value;
-            document.TryGetValue(this.GetVersionFieldName(), out value);
+            document.TryGetValue(GetVersionFieldName(), out var value);
 
             if (value != null && !value.IsBsonNull)
             {
@@ -71,7 +64,7 @@ namespace Mongo.Migration.Services
 
         public void SetVersion(BsonDocument document, DocumentVersion version)
         {
-            document[this.GetVersionFieldName()] = version.ToString();
+            document[GetVersionFieldName()] = version.ToString();
         }
 
         public void DetermineVersion<TClass>(TClass instance)
@@ -79,26 +72,21 @@ namespace Mongo.Migration.Services
         {
             var type = typeof(TClass);
             var documentVersion = instance.Version.ToString();
-            var latestVersion = this._migrationLocator.GetLatestVersion(type);
-            var currentVersion = this._runtimeVersionLocator.GetLocateOrNull(type) ?? latestVersion;
+            var latestVersion = _migrationLocator.GetLatestVersion(type);
+            var currentVersion = _runtimeVersionLocator.GetLocateOrNull(type) ?? latestVersion;
 
-            if (documentVersion == currentVersion)
+            if (documentVersion == currentVersion || documentVersion == latestVersion)
             {
                 return;
             }
 
-            if (documentVersion == latestVersion)
+            if (DocumentVersion.Default() != documentVersion)
             {
-                return;
+                throw new VersionViolationException(currentVersion.ToString(), documentVersion, latestVersion);
             }
+            
+            SetVersion(instance, currentVersion, latestVersion);
 
-            if (DocumentVersion.Default() == documentVersion)
-            {
-                SetVersion(instance, currentVersion, latestVersion);
-                return;
-            }
-
-            throw new VersionViolationException(currentVersion.ToString(), documentVersion, latestVersion);
         }
 
         public DocumentVersion DetermineLastVersion(
@@ -106,17 +94,12 @@ namespace Mongo.Migration.Services
             List<IDocumentMigration> migrations,
             int currentMigration)
         {
-            if (migrations.Last() != migrations[currentMigration])
-            {
-                return migrations[currentMigration + 1].Version;
-            }
-
-            return version;
+            return migrations.Last() != migrations[currentMigration] ? migrations[currentMigration + 1].Version : version;
         }
 
         private DocumentVersion? GetCurrentVersion(Type type)
         {
-            return this._runtimeVersionLocator.GetLocateOrNull(type);
+            return _runtimeVersionLocator.GetLocateOrNull(type);
         }
 
         private static void SetVersion<TClass>(

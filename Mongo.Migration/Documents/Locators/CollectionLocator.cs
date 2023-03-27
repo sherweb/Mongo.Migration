@@ -1,31 +1,38 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Mongo.Migration.Documents.Attributes;
+using Mongo.Migration.Migrations.Locators;
 
 namespace Mongo.Migration.Documents.Locators
 {
     public class CollectionLocator : AbstractLocator<CollectionLocationInformation, Type>, ICollectionLocator
     {
+        private readonly IMongoMigrationAssemblyService _mongoMigrationAssemblyService;
+
+        public CollectionLocator(IMongoMigrationAssemblyService mongoMigrationAssemblyService)
+        {
+            _mongoMigrationAssemblyService = mongoMigrationAssemblyService;
+        }
+        
         public override CollectionLocationInformation? GetLocateOrNull(Type identifier)
         {
-            if (!this.LocatesDictionary.ContainsKey(identifier))
+            if (!LocatesDictionary.ContainsKey(identifier))
             {
                 return null;
             }
 
-            this.LocatesDictionary.TryGetValue(identifier, out var value);
+            LocatesDictionary.TryGetValue(identifier, out var value);
             return value;
         }
 
         public override void Locate()
         {
             var types =
-                from a in AppDomain.CurrentDomain.GetAssemblies()
+                from a in _mongoMigrationAssemblyService.GetAssemblies()
                 from t in a.GetTypes()
                 let attributes = t.GetCustomAttributes(typeof(CollectionLocation), true)
-                where attributes != null && attributes.Length > 0
+                where attributes is { Length: > 0 }
                 select new { Type = t, Attributes = attributes.Cast<CollectionLocation>() };
 
             var versions = new Dictionary<Type, CollectionLocationInformation>();
@@ -36,12 +43,12 @@ namespace Mongo.Migration.Documents.Locators
                 versions.Add(type.Type, version);
             }
 
-            this.LocatesDictionary = versions;
+            LocatesDictionary = versions;
         }
 
         public IDictionary<Type, CollectionLocationInformation> GetLocatesOrEmpty()
         {
-            return this.LocatesDictionary;
+            return LocatesDictionary;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Mongo.Migration.Documents.Attributes
 
         public RuntimeVersion(string version)
         {
-            this.Version = version;
+            Version = version;
         }
     }
 }
