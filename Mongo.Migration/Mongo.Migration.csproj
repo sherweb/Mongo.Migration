@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Platforms>x64</Platforms>
+    <TargetFramework>net8.0</TargetFramework>
     <Company>Sherweb</Company>
     <Authors>Sherweb</Authors>
     <Product>Office Protect</Product>
@@ -25,7 +24,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="LightInject" Version="6.6.4" />
-    <PackageReference Include="Microsoft.AspNetCore.MiddlewareAnalysis" Version="6.0.27" />
+    <PackageReference Include="Microsoft.AspNetCore.MiddlewareAnalysis" Version="8.0.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="MinVer" Version="4.3.0">
       <PrivateAssets>all</PrivateAssets>
