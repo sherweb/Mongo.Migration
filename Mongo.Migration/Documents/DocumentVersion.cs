@@ -23,10 +23,11 @@ public struct DocumentVersion : IComparable<DocumentVersion>
     {
         try
         {
-            BsonSerializer.RegisterSerializer(typeof(DocumentVersion), new DocumentVersionSerializer());
+            BsonSerializer.TryRegisterSerializer(typeof(DocumentVersion), new DocumentVersionSerializer());
         }
         catch (Exception)
         {
+            // ignored
         }
     }
 

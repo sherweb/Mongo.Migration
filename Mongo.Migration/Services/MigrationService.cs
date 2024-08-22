@@ -62,7 +62,7 @@ internal class MigrationService : IMigrationService
     {
         try
         {
-            BsonSerializer.RegisterSerializer(this._serializer.ValueType, this._serializer);
+            BsonSerializer.TryRegisterSerializer(this._serializer.ValueType, this._serializer);
         }
         catch (BsonSerializationException ex)
         {

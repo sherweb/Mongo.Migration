@@ -20,7 +20,7 @@ public class DatabaseMigrationRunnerSetup
         try
         {
             var documentSerializaer = new DocumentVersionSerializer();
-            BsonSerializer.RegisterSerializer(documentSerializaer.ValueType, documentSerializaer);
+            BsonSerializer.TryRegisterSerializer(documentSerializaer.ValueType, documentSerializaer);
         }
         catch (BsonSerializationException ex)
         {
