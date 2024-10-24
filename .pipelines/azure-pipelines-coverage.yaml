@@ -1,7 +1,4 @@
 parameters:
-  - name: acrRepoURI
-    type: string
-    default: 'acr0opp0dev0root0sw.azurecr.io'
   - name: arrayExecs
     type: object
     default:
@@ -10,9 +7,6 @@ parameters:
     type: object
     default:
       - Mongo.Migration
-  - name: dockerfilePath
-    type: string
-    default: "none"
   - name: dotNetSdkVersion
     type: string
     default: '8.x'
@@ -24,15 +18,16 @@ variables:
   - group: DatadogCI
   - group: github-credentials
 
-pr: none
-trigger:
-  branches:
-    include:
-      - 'main'
-      - 'master'
-  paths:
-    exclude:
-      - TestResults/*
+trigger: none
+
+schedules:
+  - cron: "0 4 * * 1-5"
+    displayName: Daily Test Coverage
+    branches:
+      include:
+        - main
+        - master
+    always: false
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -50,19 +45,13 @@ resources:
       ref: dev
 
 stages:
-  - stage: CI_CD
-    displayName: DotNet Continuous Integration & Deployment
+  - stage: TestCoverage
+    displayName: DotNet Test Coverage
     jobs:
-      - template: azdoTemplates/workflows/ci-dotnet.yaml@tools
+      - template: azdoTemplates/workflows/test-coverage-dotnet.yaml@tools
         parameters:
-          acrRepoURI: "${{ parameters.acrRepoURI }}"
           arrayExecs: ${{ parameters.arrayExecs }}
           arrayPackages: ${{ parameters.arrayPackages }}
-          dockerfilePath: "${{ parameters.dockerfilePath }}"
           dotNetSdkVersion: "${{ parameters.dotNetSdkVersion }}"
           projectPath: "$(System.DefaultWorkingDirectory)/${{ parameters.gitRepoName }}"
           gitRepoName: "${{ parameters.gitRepoName }}"
-      - template: azdoTemplates/workflows/cd-docker.yaml@tools
-        parameters:
-          env: "dev"
-          imageNames: ${{ parameters.arrayExecs }}

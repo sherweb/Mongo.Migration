@@ -7,10 +7,6 @@ parameters:
     type: object
     default:
       - Mongo.Migration
-  - name: arrayTests
-    type: object
-    default:
-      - none
   - name: dockerfilePath
     type: string
     default: "none"
@@ -47,7 +43,6 @@ stages:
         parameters:
           arrayExecs: ${{ parameters.arrayExecs }}
           arrayPackages: ${{ parameters.arrayPackages }}
-          arrayTests: ${{ parameters.arrayTests }}
           dockerfilePath: "${{ parameters.dockerfilePath }}"
           dotNetSdkVersion: "${{ parameters.dotNetSdkVersion }}"
           projectPath: "$(System.DefaultWorkingDirectory)/${{ parameters.gitRepoName }}"
